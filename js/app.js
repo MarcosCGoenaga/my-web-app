@@ -4,16 +4,21 @@
 document.addEventListener('DOMContentLoaded', function() {
     const button = document.getElementById('processButton');
     if (button) {
-        button.addEventListener('click', function() {
-            const rawData = document.getElementById('rawData').value;
-            
-            // Process the data using the regex pattern
-            const filteredData = extractInventoryData(rawData);
-            
-            const jsonString = JSON.stringify(filteredData, null, 2);
-            document.getElementById('filteredData').value = jsonString;
-            document.getElementById('jsonString').value = jsonString;
-        });
+        button.addEventListener('click', processButtonClick);
+    }
+
+    function processButtonClick() {
+        const rawData = document.getElementById('rawData').value;
+        const cleanedData = cleanRawData(rawData);
+        const filteredData = extractInventoryData(cleanedData);
+        const jsonString = JSON.stringify(filteredData, null, 2);
+        document.getElementById('filteredData').value = jsonString;
+        document.getElementById('jsonString').value = jsonString;
+    }
+
+    function cleanRawData(text) {
+        // Remove unwanted characters and extra spaces
+        return text.replace(/[^\x20-\x7E]+/g, '').replace(/\s+/g, ' ').trim();
     }
 
     function extractInventoryData(text) {
@@ -26,14 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const parsedData = {};
-        
         for (const [key, pattern] of Object.entries(patterns)) {
             const match = text.match(pattern);
             if (match) {
                 parsedData[key] = match[1];
             }
         }
-
         return parsedData;
     }
 

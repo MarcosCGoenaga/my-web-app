@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
     <title>Regex Data Extractor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,14 +54,14 @@
     <div id="page1" class="page">
         <h2>Regex Data Extractor</h2>
         <label>Enter Raw Data:</label>
-        <textarea id="rawData"></textarea>
-        <button onclick="parseData()">Parse</button>
+        <textarea id="rawData" title="Enter Raw Data" placeholder="Enter Raw Data"></textarea>
+        <button id="processButton">Parse</button>
         
         <h3>Raw Data String:</h3>
-        <textarea id="rawString" readonly></textarea>
+        <textarea id="rawString" readonly title="Raw Data String" placeholder="Raw Data String"></textarea>
         
         <h3>Extracted JSON Key-Value Pairs:</h3>
-        <textarea id="jsonOutput" readonly></textarea>
+        <textarea id="jsonOutput" readonly title="Extracted JSON Key-Value Pairs" placeholder="Extracted JSON Key-Value Pairs"></textarea>
     </div>
     
     <div id="page2" class="page" style="display:none;">
