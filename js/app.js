@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function processButtonClick() {
         const rawData = document.getElementById('rawData').value;
+        const regexPattern = document.getElementById('regexPattern').value;
         document.getElementById('rawString').value = rawData;
 
-        // Example regex to extract key-value pairs (adjust as needed)
-        const regex = /(\w+):\s*(\w+)/g;
+        const regex = new RegExp(regexPattern, 'g');
         let match;
         const result = {};
 
