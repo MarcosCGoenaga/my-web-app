@@ -9,11 +9,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function processButtonClick() {
         const rawData = document.getElementById('rawData').value;
-        const cleanedData = cleanRawData(rawData);
-        const filteredData = extractInventoryData(cleanedData);
-        const jsonString = JSON.stringify(filteredData, null, 2);
-        document.getElementById('filteredData').value = jsonString;
-        document.getElementById('jsonString').value = jsonString;
+        document.getElementById('rawString').value = rawData;
+
+        // Example regex to extract key-value pairs (adjust as needed)
+        const regex = /(\w+):\s*(\w+)/g;
+        let match;
+        const result = {};
+
+        while ((match = regex.exec(rawData)) !== null) {
+            result[match[1]] = match[2];
+        }
+
+        document.getElementById('jsonOutput').value = JSON.stringify(result, null, 2);
     }
 
     function cleanRawData(text) {
@@ -41,20 +48,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function pushToTable() {
-        const jsonString = document.getElementById('jsonString').value;
-        const data = JSON.parse(jsonString);
-        const tableBody = document.querySelector('#dataTable tbody');
-        tableBody.innerHTML = '';
+        const jsonOutput = document.getElementById('jsonOutput').value;
+        const data = JSON.parse(jsonOutput);
+        const tbody = document.getElementById('dataTable').querySelector('tbody');
+        tbody.innerHTML = '';
 
-        for (const [key, value] of Object.entries(data)) {
+        for (const key in data) {
             const row = document.createElement('tr');
             const keyCell = document.createElement('td');
             const valueCell = document.createElement('td');
             keyCell.textContent = key;
-            valueCell.textContent = value;
+            valueCell.textContent = data[key];
             row.appendChild(keyCell);
             row.appendChild(valueCell);
-            tableBody.appendChild(row);
+            tbody.appendChild(row);
         }
     }
 
