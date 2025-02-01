@@ -36,4 +36,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return parsedData;
     }
+
+    function pushToTable() {
+        const jsonString = document.getElementById('jsonString').value;
+        const data = JSON.parse(jsonString);
+        const tableBody = document.querySelector('#dataTable tbody');
+        tableBody.innerHTML = '';
+
+        for (const [key, value] of Object.entries(data)) {
+            const row = document.createElement('tr');
+            const keyCell = document.createElement('td');
+            const valueCell = document.createElement('td');
+            keyCell.textContent = key;
+            valueCell.textContent = value;
+            row.appendChild(keyCell);
+            row.appendChild(valueCell);
+            tableBody.appendChild(row);
+        }
+    }
+
+    window.pushToTable = pushToTable;
 });
